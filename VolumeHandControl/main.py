@@ -17,6 +17,9 @@ volume = interface.QueryInterface(IAudioEndpointVolume)
 volumeRange = volume.GetVolumeRange()
 minVol = volumeRange[0]
 maxVol = volumeRange[1]
+vol=0
+volBar=400
+volPer=0
 # volume.SetMasterVolumeLevel(-20.0, None)
 
 cap = cv.VideoCapture(0)
@@ -44,14 +47,20 @@ while cap.isOpened():
 
         length = math.hypot(x2 - x1, y2 - y1)
 
-        vol = np.interp(length, [50, 200], [minVol, maxVol])
-        print(vol)
+        vol = np.interp(length, [20, 300], [minVol, maxVol])
+        volBar = np.interp(length, [20, 300], [400, 150])
+        volPer = np.interp(length, [20, 300], [0,100])
+        print(length,vol)
         volume.SetMasterVolumeLevel(vol, None)
 
         if length < 50:
             cv.circle(frame, (cx, cy), 10, (0, 255, 0), cv.FILLED)
 
         # print(lmList[4], lmList[8])
+    
+    cv.rectangle(frame, (50, 150), (85, 400), (0, 255, 0), 3)
+    cv.rectangle(frame, (50, int(volBar)), (85, 400), (0, 255, 0), cv.FILLED)
+    cv.putText(frame, f'{int(volPer)} %', (40, 450), cv.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 3)
 
 
 
