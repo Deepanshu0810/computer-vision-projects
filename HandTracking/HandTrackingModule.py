@@ -33,19 +33,19 @@ class HandDetector:
                 cx, cy = int(lm.x * w), int(lm.y * h)
                 lmList.append([id, cx, cy])
 
-                if draw:
-                    if id == 0:
-                        cv.circle(img, (cx, cy), 15, (255, 0, 255), cv.FILLED)
-                    if id == 4:
-                        cv.circle(img, (cx, cy), 15, (255, 0, 255), cv.FILLED)
-                    if id == 8:
-                        cv.circle(img, (cx, cy), 15, (255, 0, 255), cv.FILLED)
-                    if id == 12:
-                        cv.circle(img, (cx, cy), 15, (255, 0, 255), cv.FILLED)
-                    if id == 16:
-                        cv.circle(img, (cx, cy), 15, (255, 0, 255), cv.FILLED)
-                    if id == 20:
-                        cv.circle(img, (cx, cy), 15, (255, 0, 255), cv.FILLED)
+                # if draw:
+                #     if id == 0:
+                #         cv.circle(img, (cx, cy), 15, (255, 0, 255), cv.FILLED)
+                #     if id == 4:
+                #         cv.circle(img, (cx, cy), 15, (255, 0, 255), cv.FILLED)
+                #     if id == 8:
+                #         cv.circle(img, (cx, cy), 15, (255, 0, 255), cv.FILLED)
+                #     if id == 12:
+                #         cv.circle(img, (cx, cy), 15, (255, 0, 255), cv.FILLED)
+                #     if id == 16:
+                #         cv.circle(img, (cx, cy), 15, (255, 0, 255), cv.FILLED)
+                #     if id == 20:
+                #         cv.circle(img, (cx, cy), 15, (255, 0, 255), cv.FILLED)
 
         return lmList
     
