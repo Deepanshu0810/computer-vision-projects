@@ -11,6 +11,7 @@ class HandDetector:
         self.mpHands = mp.solutions.hands
         self.hands = self.mpHands.Hands()
         self.mpDraw = mp.solutions.drawing_utils
+        self.tips = [4, 8, 12, 16, 20]
 
     def findHands(self, img, draw=True):
         imgRGB = cv.cvtColor(img, cv.COLOR_BGR2RGB)
@@ -24,30 +25,41 @@ class HandDetector:
         return img
 
     def findPosition(self, img, handNo=0, draw=True):
-        lmList = []
+        self.lmList = []
         if self.results.multi_hand_landmarks:
             myHand = self.results.multi_hand_landmarks[handNo]
 
             for id, lm in enumerate(myHand.landmark):
                 h, w, c = img.shape
                 cx, cy = int(lm.x * w), int(lm.y * h)
-                lmList.append([id, cx, cy])
+                self.lmList.append([id, cx, cy])
 
-                # if draw:
-                #     if id == 0:
-                #         cv.circle(img, (cx, cy), 15, (255, 0, 255), cv.FILLED)
-                #     if id == 4:
-                #         cv.circle(img, (cx, cy), 15, (255, 0, 255), cv.FILLED)
-                #     if id == 8:
-                #         cv.circle(img, (cx, cy), 15, (255, 0, 255), cv.FILLED)
-                #     if id == 12:
-                #         cv.circle(img, (cx, cy), 15, (255, 0, 255), cv.FILLED)
-                #     if id == 16:
-                #         cv.circle(img, (cx, cy), 15, (255, 0, 255), cv.FILLED)
-                #     if id == 20:
-                #         cv.circle(img, (cx, cy), 15, (255, 0, 255), cv.FILLED)
+        return self.lmList
+    
+    def fingersUp(self):
+        
+        fingerOpen = []
 
-        return lmList
+        # check right or left
+        if self.lmList[17][1] > self.lmList[5][1]:
+            # print("Right Hand")
+            if self.lmList[self.tips[0]][1] < self.lmList[self.tips[0] - 1][1]:
+                # print("Thumb Open")
+                fingerOpen.append(1)
+            else:
+                # print("Thumb Close")
+                fingerOpen.append(0)
+            
+        else:
+            # print("Left Hand")
+            if self.lmList[self.tips[0]][1] > self.lmList[self.tips[0] - 1][1]:
+                # print("Thumb Open")
+                fingerOpen.append(1)
+            else:
+                # print("Thumb Close")
+                fingerOpen.append(0)
+
+        return fingerOpen
     
 def main():
     cap = cv.VideoCapture(0)
