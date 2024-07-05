@@ -49,7 +49,9 @@ while cap.isOpened():
                 # print(f"Finger {id} Close")
                 fingerOpen.append(0)
 
-        print(fingerOpen)
+        # print(fingerOpen)
+        count = fingerOpen.count(1)
+        cv.putText(frame, f"Finger Count: {count}", (10, 50), cv.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
         
 
     cv.imshow("Frame", frame)
